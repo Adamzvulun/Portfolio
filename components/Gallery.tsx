@@ -41,6 +41,8 @@ export default function Gallery({ photos, layout = "paired" }: Props) {
         alt={photo.alt}
         width={photo.width}
         height={photo.height}
+        placeholder="blur"
+        blurDataURL={photo.blurDataURL}
         sizes="(max-width: 768px) 50vw, 640px"
         className="block w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
       />

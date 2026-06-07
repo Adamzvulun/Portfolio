@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: "The natural world, observed quietly.",
 };
 
-export default function Page() {
-  const gallery = getGallery("wildlife");
+export default async function Page() {
+  const gallery = await getGallery("wildlife");
   return (
     <div className="mx-auto max-w-7xl px-6 pb-16">
       <Gallery photos={gallery.photos} layout="balance" />

@@ -10,6 +10,7 @@
     "resize": "node scripts/resize.mjs"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "image-size": "^2.0.2",
     "next": "16.2.7",
     "react": "19.2.4",

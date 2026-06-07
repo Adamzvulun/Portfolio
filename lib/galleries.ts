@@ -29,10 +29,10 @@ const meta: Record<GallerySlug, Omit<Gallery, "photos">> = {
   },
 };
 
-export function getGallery(slug: GallerySlug): Gallery {
-  return { ...meta[slug], photos: loadPhotos(slug) };
+export async function getGallery(slug: GallerySlug): Promise<Gallery> {
+  return { ...meta[slug], photos: await loadPhotos(slug) };
 }
 
-export function getFeatured(): Photo[] {
+export async function getFeatured(): Promise<Photo[]> {
   return loadPhotos("home");
 }

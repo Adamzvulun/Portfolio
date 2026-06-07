@@ -1,8 +1,8 @@
 import Gallery from "@/components/Gallery";
 import { getFeatured } from "@/lib/galleries";
 
-export default function Home() {
-  const photos = getFeatured();
+export default async function Home() {
+  const photos = await getFeatured();
   return (
     <div className="mx-auto max-w-7xl px-6 pb-16">
       <Gallery photos={photos} />

@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: "Lines, structure, and built space.",
 };
 
-export default function Page() {
-  const gallery = getGallery("architecture");
+export default async function Page() {
+  const gallery = await getGallery("architecture");
   return (
     <div className="mx-auto max-w-7xl px-6 pb-16">
       <Gallery photos={gallery.photos} layout="balance" />
