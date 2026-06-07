@@ -29,9 +29,12 @@ things plainly, never assume he'll edit code himself.
 - Lightbox: `yet-another-react-lightbox` (do not swap)
 - Dimension reader: `image-size` (returns EXIF orientation in `.orientation`)
 - Image processor: `sharp` (peer dep of Next.js, used by `scripts/resize.mjs`)
-- Branch: **`claude/stoic-fermi-qBOF2`** (never push to main without permission)
-- Hosting: **Vercel** is the plan, but **not yet connected** as of this handoff.
-  User still needs to import the repo at vercel.com/new.
+- Branches: production is **`main`** (Vercel deploys it live). Active feature
+  branch is **`claude/bold-brown-MFBI3`** — work there, then merge to `main`
+  to push live. (Older `claude/stoic-fermi-qBOF2` is stale.)
+- Hosting: **LIVE on Vercel** → https://portfolio-bay-tau-87.vercel.app
+  Every push to `main` redeploys. See "Vercel deploy gotchas" in PLAN.md for
+  the framework-pin + image-trace fixes that were needed to get it working.
 
 ## Site structure
 
@@ -39,7 +42,7 @@ things plainly, never assume he'll edit code himself.
 app/
   layout.tsx              centered Adam Zvulun title + nav + footer + BackToTop
   page.tsx                / — home, featured gallery (paired layout)
-  architecture/page.tsx   /architecture (balance layout, empty)
+  architecture/page.tsx   /architecture (balance layout, 14 photos)
   portraits/page.tsx      /portraits (balance layout)
   wildlife/page.tsx       /wildlife (balance layout)
   contact/page.tsx        /contact — Formspree form (not yet configured)
@@ -58,7 +61,7 @@ scripts/
                           NOT currently use it; he pushes originals.
 public/images/
   home/                   featured gallery photos (currently 41)
-  architecture/           empty (.gitkeep only)
+  architecture/           14 photos
   portraits/              11 photos
   wildlife/               10 photos
 ```
@@ -83,7 +86,7 @@ Current per-page assignment (`app/<page>/page.tsx`):
 | home (`/`) | `paired` (default) | user wants specific photo pairs side by side |
 | portraits | `balance` | user prefers the masonry balance look |
 | wildlife | `balance` | same |
-| architecture | `balance` | empty, harmless |
+| architecture | `balance` | 14 photos, masonry look |
 
 Home photos are arranged in **VV / LL pairs** so each `paired` row has two
 photos of similar height — keeps columns balanced. If you reshuffle home,
@@ -131,8 +134,9 @@ column heights.
 - **Resize**: refuses to resize. Pushes originals.
 - **Drag-and-drop reorder**: explicitly rejected (would need backend or only
   persist in his browser). Filename prefixes are the agreed mechanism.
-- **Vercel deploy**: not done. Next step once he's happy with the look.
-- **Architecture page**: empty. He hasn't shot any yet (or hasn't pushed any).
+- **Vercel deploy**: DONE — live at https://portfolio-bay-tau-87.vercel.app,
+  deploys from `main`. (See PLAN.md "Vercel deploy gotchas".)
+- **Architecture page**: 14 photos committed, `balance` layout.
 - **Custom domain**: not yet bought.
 - **Mobile testing**: not done. Layout is responsive but unverified.
 

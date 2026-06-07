@@ -3,7 +3,7 @@
 Living checklist of what's done and what's still open. Each Claude session
 should update this file as part of its work.
 
-Last updated: scaffold + photo wiring + per-page layout split
+Last updated: deployed to Vercel (live) — framework pinned + image trace fix
 
 ---
 
@@ -35,7 +35,7 @@ Last updated: scaffold + photo wiring + per-page layout split
 - [x] Home: 41 photos, first 6 user-picked, rest VV/LL pair-balanced
 - [x] Portraits: 11 photos, user-ordered (top 2: moonlit standing + bench)
 - [x] Wildlife: 10 photos, user-ordered (top 2: tiger close-up + bumblebees)
-- [x] Architecture: empty folder (`.gitkeep` only)
+- [x] Architecture: 14 photos committed
 
 ### Tooling
 - [x] `npm run dev` / `build` / `start` / `lint` working
@@ -53,17 +53,28 @@ Last updated: scaffold + photo wiring + per-page layout split
 
 ## Open
 
-### Blocking next visible progress
-- [ ] **Deploy to Vercel** — repo is ready, user needs to import at
-      vercel.com/new → GitHub → Portfolio. Auto-detects Next.js. Walk him
-      through it when he's ready.
-- [ ] **Pick a production branch** on Vercel (this feature branch, or merge
-      to `main` first).
+### Done since last session
+- [x] **Deployed to Vercel** — live at
+      https://portfolio-bay-tau-87.vercel.app. Production branch is `main`.
+      Two fixes were needed (see "Vercel deploy gotchas" below).
+- [x] **Architecture photos** — 14 committed.
 
 ### Content gaps
-- [ ] **Architecture photos** — folder is empty; user hasn't shot/pushed any.
 - [ ] **More home picks** if user wants — easy to insert with the NN-prefix
       rename flow.
+
+### Vercel deploy gotchas (already solved — keep for reference)
+- The first import deployed the *empty* initial commit, so Vercel guessed the
+  framework as "Other" and just served `public/` statically → every route 404'd.
+  Fixed by pinning the framework in `vercel.json` (`"framework": "nextjs"`).
+- Once `next build` ran, the serverless function was 559MB (Next traced the
+  whole ~560MB `public/images` folder into it) → exceeded Vercel's 300MB limit.
+  Fixed with `outputFileTracingExcludes` in `next.config.ts` — pages are static
+  and images come from the CDN, so the function doesn't need the bytes.
+- Production deployments must have **Deployment Protection OFF** (Settings) so
+  the public can view the site without logging into Vercel.
+- Vercel's UI hid the "Production Branch" setting, so we set `main` as the live
+  branch by merging the feature branch into `main` and deploying that.
 
 ### Contact form
 - [ ] **Sign up for Formspree** (free tier, no credit card)
