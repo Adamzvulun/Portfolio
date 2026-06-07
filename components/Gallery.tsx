@@ -1,9 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Counter from "yet-another-react-lightbox/plugins/counter";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/counter.css";
 import type { Photo } from "@/lib/galleries";
 
 type Props = {
@@ -29,12 +33,35 @@ function Tile({
   extraClassName?: string;
 }) {
   const [loaded, setLoaded] = useState(false);
+  const [inView, setInView] = useState(false);
+  const ref = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    // Reveal the tile (rise + fade) the first time it scrolls into view.
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setInView(true);
+          obs.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px" },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <button
+      ref={ref}
       type="button"
       onClick={() => onOpen(lightboxIndex)}
       style={{ backgroundColor: photo.bgColor }}
-      className={`group block w-full cursor-zoom-in overflow-hidden ${extraClassName}`}
+      className={`group block w-full cursor-zoom-in overflow-hidden transition-[opacity,transform] duration-700 ease-out ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+      } ${extraClassName}`}
       aria-label={`Open ${photo.alt}`}
     >
       <Image
@@ -110,6 +137,9 @@ export default function Gallery({ photos, layout = "paired" }: Props) {
         close={() => setIndex(-1)}
         index={index >= 0 ? index : 0}
         slides={photos.map((p) => ({ src: p.src, alt: p.alt, width: p.width, height: p.height }))}
+        plugins={[Zoom, Counter, Fullscreen]}
+        counter={{ container: { style: { top: 0, bottom: "unset" } } }}
+        zoom={{ maxZoomPixelRatio: 3, doubleTapDelay: 250 }}
       />
     </>
   );
