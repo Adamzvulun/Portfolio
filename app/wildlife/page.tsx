@@ -2,16 +2,15 @@ import type { Metadata } from "next";
 import Gallery from "@/components/Gallery";
 import { getGallery } from "@/lib/galleries";
 
-const gallery = getGallery("wildlife");
-
 export const metadata: Metadata = {
-  title: `${gallery.title} — Adam Zvulun`,
-  description: gallery.description,
+  title: "Wildlife — Adam Zvulun",
+  description: "The natural world, observed quietly.",
 };
 
 export default function Page() {
+  const gallery = getGallery("wildlife");
   return (
-    <div className="mx-auto max-w-7xl px-6 pb-12">
+    <div className="mx-auto max-w-3xl px-4 pb-12">
       <Gallery photos={gallery.photos} />
     </div>
   );

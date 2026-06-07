@@ -20,24 +20,45 @@ npm run dev
 
 ## Adding photos
 
-1. Drop image files into `public/images/<category>/` (e.g. `public/images/portraits/dana-001.jpg`).
-2. Open `lib/galleries.ts` and add an entry to the appropriate gallery's `photos` array:
-   ```ts
-   {
-     src: "/images/portraits/dana-001.jpg",
-     alt: "Dana, golden hour",
-     width: 1600,
-     height: 1067,
-   }
-   ```
-   `width` / `height` should be the photo's real dimensions (or any pair with the correct aspect ratio).
-3. Save — the dev server reloads automatically.
+**Just drop files into the right folder. No code edits needed.**
 
-The home page reads from the `featured` array in the same file.
+The site scans `public/images/<category>/` automatically. Whatever images
+are in there show up on that page, in alphabetical filename order.
+
+Folders:
+
+- `public/images/home/` — featured photos on the landing page
+- `public/images/automotive/`
+- `public/images/architecture/`
+- `public/images/portraits/`
+- `public/images/wildlife/`
+
+Supported formats: `.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`, `.gif`.
+
+### Controlling the order
+
+Files are sorted alphabetically (with smart number handling). To reorder,
+prefix filenames with numbers:
+
+```
+01-porsche-front.jpg
+02-porsche-side.jpg
+03-porsche-engine.jpg
+```
+
+The grid lays out top-to-bottom, left-to-right across two columns, so
+`01-` appears top-left, then the rest flow down.
 
 ### Recommended photo sizes
 - Long edge ~2000px, JPEG quality ~80, sRGB.
-- Next.js handles responsive sizing and WebP conversion automatically.
+- Aim for ~250–500 KB per file.
+- Next.js auto-generates responsive sizes + WebP at request time.
+
+### Alt text (accessibility / SEO)
+
+Alt text is derived from the filename — the leading number, dashes, and
+underscores are stripped. So `01-golden-hour-rooftop.jpg` becomes
+`"golden hour rooftop"`. Name files descriptively.
 
 ## Contact form (Formspree)
 
