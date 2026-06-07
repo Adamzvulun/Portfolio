@@ -16,22 +16,25 @@ const title = "Adam Zvulun — Photography";
 const description = "Photography portfolio of Adam Zvulun.";
 
 export const metadata: Metadata = {
-  // Absolute base so opengraph-image / twitter-image and other relative
-  // metadata URLs resolve to the production domain when links are shared.
+  // Absolute base so relative metadata URLs resolve to the production domain
+  // when links are shared.
   metadataBase: new URL("https://adamzvulun.com"),
   title,
-  description,
+  // The SEO description is emitted via `other` (below) rather than the
+  // top-level `description` field on purpose: Next auto-copies a top-level
+  // description into og:description / twitter:description, which would put a
+  // subtitle line on the share card. Routing it through `other` keeps the
+  // <meta name="description"> tag for search engines without feeding the card.
+  other: { description },
   openGraph: {
     title,
-    description,
-    url: "/",
     siteName: "Adam Zvulun",
     type: "website",
-    // Explicit absolute URL with no query string. Next's file-convention
-    // opengraph-image.jpg also emits a tag (which most scrapers handle), but
-    // WhatsApp's scraper can choke on the cache-busting `?hash` suffix and
-    // drop the preview image. Pointing it at a clean static copy is the
-    // reliable path for WhatsApp.
+    // Explicit absolute URL with no query string — WhatsApp's scraper can
+    // choke on the cache-busting `?hash` suffix Next adds to file-convention
+    // images, so we point at a clean static copy in /public.
+    // No `url` (og:url) on purpose: a canonical og:url makes WhatsApp dedupe
+    // every `?param` test link back to the bare domain's cached entry.
     images: [
       {
         url: "https://adamzvulun.com/og.jpg",
@@ -44,7 +47,6 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title,
-    description,
     images: ["https://adamzvulun.com/og.jpg"],
   },
 };
