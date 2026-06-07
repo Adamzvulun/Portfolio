@@ -31,8 +31,14 @@ export function loadPhotos(category: string): Photo[] {
   return files.map((file) => {
     const buf = fs.readFileSync(path.join(dir, file));
     const dims = imageSize(buf);
-    const width = dims.width ?? 1600;
-    const height = dims.height ?? 1067;
+    let width = dims.width ?? 1600;
+    let height = dims.height ?? 1067;
+    // EXIF orientations 5-8 are rotated 90/270 degrees, so the displayed
+    // width/height are swapped from the stored width/height. Browsers
+    // handle the actual rotation; we just need to report the right ratio.
+    if (dims.orientation && dims.orientation >= 5 && dims.orientation <= 8) {
+      [width, height] = [height, width];
+    }
 
     const alt = file
       .replace(/\.[^.]+$/, "")
