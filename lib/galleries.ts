@@ -12,48 +12,53 @@ export type Gallery = {
   photos: Photo[];
 };
 
-const placeholder = (category: string, n: number, w = 1600, h = 1067): Photo => ({
-  src: `/images/${category}/placeholder-${n}.svg`,
-  alt: `${category} photo ${n}`,
-  width: w,
-  height: h,
-});
+/**
+ * HOW TO ADD A PHOTO
+ * ------------------
+ * 1. Drop the image file into public/images/<category>/  (e.g. public/images/portraits/dana.jpg)
+ * 2. Add an entry to the matching photos array below. Example:
+ *
+ *      {
+ *        src: "/images/portraits/dana.jpg",
+ *        alt: "Dana at golden hour",
+ *        width: 1600,   // real width of the photo in pixels (or any pair with the correct aspect ratio)
+ *        height: 1067,  // real height of the photo in pixels
+ *      }
+ *
+ *    `src` always starts with `/images/...` (the `public/` part is stripped automatically).
+ *    `width` and `height` only need to match the photo's aspect ratio so the grid lays out correctly.
+ *
+ * The home page reads from `featured` (so put your best 6–9 there).
+ */
 
 export const galleries: Gallery[] = [
   {
     slug: "automotive",
     title: "Automotive",
     description: "Cars, motion, and machined light.",
-    photos: [1, 2, 3, 4, 5, 6].map((n) => placeholder("automotive", n)),
+    photos: [],
   },
   {
     slug: "architecture",
     title: "Architecture",
     description: "Lines, structure, and built space.",
-    photos: [1, 2, 3, 4, 5, 6].map((n) => placeholder("architecture", n)),
+    photos: [],
   },
   {
     slug: "portraits",
     title: "Portraits",
     description: "People and presence.",
-    photos: [1, 2, 3, 4, 5, 6].map((n) => placeholder("portraits", n, 1067, 1600)),
+    photos: [],
   },
   {
     slug: "wildlife",
     title: "Wildlife",
     description: "The natural world, observed quietly.",
-    photos: [1, 2, 3, 4, 5, 6].map((n) => placeholder("wildlife", n)),
+    photos: [],
   },
 ];
 
-export const featured: Photo[] = [
-  { src: "/images/home/featured-1.svg", alt: "Featured photograph 1", width: 1600, height: 1067 },
-  { src: "/images/home/featured-2.svg", alt: "Featured photograph 2", width: 1067, height: 1600 },
-  { src: "/images/home/featured-3.svg", alt: "Featured photograph 3", width: 1600, height: 1067 },
-  { src: "/images/home/featured-4.svg", alt: "Featured photograph 4", width: 1600, height: 1067 },
-  { src: "/images/home/featured-5.svg", alt: "Featured photograph 5", width: 1067, height: 1600 },
-  { src: "/images/home/featured-6.svg", alt: "Featured photograph 6", width: 1600, height: 1067 },
-];
+export const featured: Photo[] = [];
 
 export function getGallery(slug: Gallery["slug"]) {
   const g = galleries.find((g) => g.slug === slug);
