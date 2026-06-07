@@ -20,24 +20,58 @@ npm run dev
 
 ## Adding photos
 
-1. Drop image files into `public/images/<category>/` (e.g. `public/images/portraits/dana-001.jpg`).
-2. Open `lib/galleries.ts` and add an entry to the appropriate gallery's `photos` array:
-   ```ts
-   {
-     src: "/images/portraits/dana-001.jpg",
-     alt: "Dana, golden hour",
-     width: 1600,
-     height: 1067,
-   }
+The site auto-discovers everything in `public/images/<category>/`. But
+camera originals are 20–50 MB each — way too big for GitHub (100 MB hard
+limit) and pointless for the web. So the workflow is:
+
+1. **Drop originals** into `raw-photos/<category>/` (this folder is
+   gitignored — originals stay on your machine, never get committed)
+2. **Run the resize script** — it shrinks each photo to 2400px long edge,
+   JPEG quality 82, and writes the optimized version into
+   `public/images/<category>/`:
+   ```bash
+   npm run resize
    ```
-   `width` / `height` should be the photo's real dimensions (or any pair with the correct aspect ratio).
-3. Save — the dev server reloads automatically.
+   Typical reduction: 30 MB → ~500 KB. Indistinguishable on any screen.
+3. **Commit + push** `public/images/` — the small optimized JPEGs only.
 
-The home page reads from the `featured` array in the same file.
+The first time you run `npm run resize`, it creates the
+`raw-photos/<category>/` folder structure for you. Subsequent runs skip
+files whose output is already up-to-date, so re-running is cheap.
 
-### Recommended photo sizes
-- Long edge ~2000px, JPEG quality ~80, sRGB.
-- Next.js handles responsive sizing and WebP conversion automatically.
+### Folders
+
+- `public/images/home/` — featured photos on the landing page
+- `public/images/automotive/`
+- `public/images/architecture/`
+- `public/images/portraits/`
+- `public/images/wildlife/`
+
+Supported input formats: `.jpg`, `.jpeg`, `.png`, `.tif`, `.tiff`,
+`.webp`, `.heic`, `.heif`, `.avif`. All output as `.jpg`.
+
+### Controlling the order
+
+Files are sorted alphabetically (with smart number handling). To reorder,
+prefix filenames with numbers:
+
+```
+raw-photos/automotive/
+  01-porsche-front.jpg
+  02-porsche-side.jpg
+  03-porsche-engine.jpg
+```
+
+The grid lays out top-to-bottom, left-to-right across two columns, so
+`01-` appears top-left, then the rest flow down. To move a photo, just
+rename — change `02-` to `04-` and `04-` to `02-`, run `npm run resize`
+again, save. Done.
+
+### Alt text (accessibility / SEO)
+
+Alt text is derived from the filename — the leading number, dashes, and
+underscores are stripped. So `01-golden-hour-rooftop.jpg` becomes
+`"golden hour rooftop"`. Name files descriptively.
 
 ## Contact form (Formspree)
 

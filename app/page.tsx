@@ -1,10 +1,11 @@
 import Gallery from "@/components/Gallery";
-import { featured } from "@/lib/galleries";
+import { getFeatured } from "@/lib/galleries";
 
 export default function Home() {
+  const photos = getFeatured();
   return (
-    <div className="mx-auto max-w-7xl px-6 pb-12">
-      <Gallery photos={featured} />
+    <div className="mx-auto max-w-3xl px-4 pb-12">
+      <Gallery photos={photos} />
     </div>
   );
 }

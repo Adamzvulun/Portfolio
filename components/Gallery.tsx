@@ -13,23 +13,32 @@ type Props = {
 export default function Gallery({ photos }: Props) {
   const [index, setIndex] = useState<number>(-1);
 
+  if (photos.length === 0) {
+    return (
+      <p className="text-center text-sm uppercase tracking-[0.25em] text-neutral-400 py-16">
+        No photos yet
+      </p>
+    );
+  }
+
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+      <div className="columns-2 gap-3 [column-fill:_balance]">
         {photos.map((photo, i) => (
           <button
             key={photo.src}
             type="button"
             onClick={() => setIndex(i)}
-            className="group relative aspect-[3/2] overflow-hidden bg-neutral-100 cursor-zoom-in"
+            className="group block w-full mb-3 break-inside-avoid cursor-zoom-in overflow-hidden bg-neutral-100"
             aria-label={`Open ${photo.alt}`}
           >
             <Image
               src={photo.src}
               alt={photo.alt}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              width={photo.width}
+              height={photo.height}
+              sizes="(max-width: 768px) 50vw, 384px"
+              className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
             />
           </button>
         ))}
