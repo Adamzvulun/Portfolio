@@ -11,7 +11,7 @@ export default function Page() {
   const gallery = getGallery("wildlife");
   return (
     <div className="mx-auto max-w-7xl px-6 pb-16">
-      <Gallery photos={gallery.photos} />
+      <Gallery photos={gallery.photos} layout="balance" />
     </div>
   );
 }
