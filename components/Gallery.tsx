@@ -42,7 +42,7 @@ function Tile({
         alt={photo.alt}
         width={photo.width}
         height={photo.height}
-        sizes="(max-width: 768px) 50vw, 640px"
+        sizes="(max-width: 640px) 100vw, 640px"
         onLoad={() => setLoaded(true)}
         className={`block w-full h-auto transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.02] ${
           loaded ? "opacity-100" : "opacity-0"
@@ -69,27 +69,37 @@ export default function Gallery({ photos, layout = "paired" }: Props) {
   return (
     <>
       {layout === "paired" ? (
-        <div className="grid grid-cols-2 gap-4 sm:gap-6">
-          <div className="flex flex-col gap-4 sm:gap-6">
-            {left.map((photo, i) => (
-              <Tile key={photo.src} photo={photo} lightboxIndex={i * 2} onOpen={setIndex} />
+        <>
+          {/* Phones: single linear column in source order — each photo gets
+              the full width and reads at proper scale. */}
+          <div className="flex flex-col gap-3 sm:hidden">
+            {photos.map((photo, i) => (
+              <Tile key={photo.src} photo={photo} lightboxIndex={i} onOpen={setIndex} />
             ))}
           </div>
-          <div className="flex flex-col gap-4 sm:gap-6">
-            {right.map((photo, i) => (
-              <Tile key={photo.src} photo={photo} lightboxIndex={i * 2 + 1} onOpen={setIndex} />
-            ))}
+          {/* Tablet+: paired two columns (odd → left, even → right). */}
+          <div className="hidden sm:grid sm:grid-cols-2 sm:gap-6">
+            <div className="flex flex-col gap-6">
+              {left.map((photo, i) => (
+                <Tile key={photo.src} photo={photo} lightboxIndex={i * 2} onOpen={setIndex} />
+              ))}
+            </div>
+            <div className="flex flex-col gap-6">
+              {right.map((photo, i) => (
+                <Tile key={photo.src} photo={photo} lightboxIndex={i * 2 + 1} onOpen={setIndex} />
+              ))}
+            </div>
           </div>
-        </div>
+        </>
       ) : (
-        <div className="columns-2 gap-4 sm:gap-6 [column-fill:_balance]">
+        <div className="columns-1 sm:columns-2 gap-4 sm:gap-6 [column-fill:_balance]">
           {photos.map((photo, i) => (
             <Tile
               key={photo.src}
               photo={photo}
               lightboxIndex={i}
               onOpen={setIndex}
-              extraClassName="mb-4 sm:mb-6 break-inside-avoid"
+              extraClassName="mb-3 sm:mb-6 break-inside-avoid"
             />
           ))}
         </div>

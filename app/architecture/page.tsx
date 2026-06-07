@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const gallery = await getGallery("architecture");
   return (
-    <div className="mx-auto max-w-7xl px-6 pb-16">
+    <div className="mx-auto max-w-7xl px-3 sm:px-6 pb-16">
       <Gallery photos={gallery.photos} layout="balance" />
     </div>
   );

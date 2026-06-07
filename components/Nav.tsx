@@ -18,7 +18,7 @@ export default function Nav() {
     <header className="pt-16 sm:pt-28 pb-16 text-center">
       <Link
         href="/"
-        className="inline-block text-3xl sm:text-4xl font-bold uppercase tracking-wider text-neutral-900 hover:text-neutral-700 transition-colors"
+        className="inline-block text-4xl sm:text-4xl font-bold uppercase tracking-wider text-neutral-900 hover:text-neutral-700 transition-colors"
       >
         Adam Zvulun
       </Link>
