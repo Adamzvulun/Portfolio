@@ -8,8 +8,12 @@ export type Photo = {
   alt: string;
   width: number;
   height: number;
-  /** Tiny base64 JPEG shown (CSS-blurred) while the full image loads. */
-  blurDataURL: string;
+  /**
+   * Average color of the photo, used as the tile background so each image
+   * fades in over a tonally-matched solid color instead of a chunky JPEG
+   * blur. Format: "#rrggbb".
+   */
+  bgColor: string;
 };
 
 const IMAGE_RE = /\.(jpe?g|png|webp|avif|gif)$/i;
@@ -44,14 +48,14 @@ export async function loadPhotos(category: string): Promise<Photo[]> {
         [width, height] = [height, width];
       }
 
-      // Small blurred placeholder. .rotate() bakes in EXIF orientation so the
-      // blur matches the displayed photo; fit "inside" keeps the aspect ratio.
-      const blur = await sharp(buf)
+      // Average color via 1x1 downsample → single RGB pixel.
+      const { data } = await sharp(buf)
         .rotate()
-        .resize(16, 16, { fit: "inside" })
-        .jpeg({ quality: 40 })
-        .toBuffer();
-      const blurDataURL = `data:image/jpeg;base64,${blur.toString("base64")}`;
+        .resize(1, 1, { fit: "cover" })
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+      const hex = (n: number) => n.toString(16).padStart(2, "0");
+      const bgColor = `#${hex(data[0])}${hex(data[1])}${hex(data[2])}`;
 
       const alt =
         file
@@ -65,7 +69,7 @@ export async function loadPhotos(category: string): Promise<Photo[]> {
         alt,
         width,
         height,
-        blurDataURL,
+        bgColor,
       };
     }),
   );

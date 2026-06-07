@@ -17,6 +17,41 @@ type Props = {
   layout?: "paired" | "balance";
 };
 
+function Tile({
+  photo,
+  lightboxIndex,
+  onOpen,
+  extraClassName = "",
+}: {
+  photo: Photo;
+  lightboxIndex: number;
+  onOpen: (i: number) => void;
+  extraClassName?: string;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(lightboxIndex)}
+      style={{ backgroundColor: photo.bgColor }}
+      className={`group block w-full cursor-zoom-in overflow-hidden ${extraClassName}`}
+      aria-label={`Open ${photo.alt}`}
+    >
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
+        sizes="(max-width: 768px) 50vw, 640px"
+        onLoad={() => setLoaded(true)}
+        className={`block w-full h-auto transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.02] ${
+          loaded ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    </button>
+  );
+}
+
 export default function Gallery({ photos, layout = "paired" }: Props) {
   const [index, setIndex] = useState<number>(-1);
 
@@ -28,27 +63,6 @@ export default function Gallery({ photos, layout = "paired" }: Props) {
     );
   }
 
-  const renderTile = (photo: Photo, lightboxIndex: number, extraClassName = "") => (
-    <button
-      key={photo.src}
-      type="button"
-      onClick={() => setIndex(lightboxIndex)}
-      className={`group block w-full cursor-zoom-in overflow-hidden bg-neutral-100 ${extraClassName}`}
-      aria-label={`Open ${photo.alt}`}
-    >
-      <Image
-        src={photo.src}
-        alt={photo.alt}
-        width={photo.width}
-        height={photo.height}
-        placeholder="blur"
-        blurDataURL={photo.blurDataURL}
-        sizes="(max-width: 768px) 50vw, 640px"
-        className="block w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
-      />
-    </button>
-  );
-
   const left = photos.filter((_, i) => i % 2 === 0);
   const right = photos.filter((_, i) => i % 2 === 1);
 
@@ -57,15 +71,27 @@ export default function Gallery({ photos, layout = "paired" }: Props) {
       {layout === "paired" ? (
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
           <div className="flex flex-col gap-4 sm:gap-6">
-            {left.map((photo, i) => renderTile(photo, i * 2))}
+            {left.map((photo, i) => (
+              <Tile key={photo.src} photo={photo} lightboxIndex={i * 2} onOpen={setIndex} />
+            ))}
           </div>
           <div className="flex flex-col gap-4 sm:gap-6">
-            {right.map((photo, i) => renderTile(photo, i * 2 + 1))}
+            {right.map((photo, i) => (
+              <Tile key={photo.src} photo={photo} lightboxIndex={i * 2 + 1} onOpen={setIndex} />
+            ))}
           </div>
         </div>
       ) : (
         <div className="columns-2 gap-4 sm:gap-6 [column-fill:_balance]">
-          {photos.map((photo, i) => renderTile(photo, i, "mb-4 sm:mb-6 break-inside-avoid"))}
+          {photos.map((photo, i) => (
+            <Tile
+              key={photo.src}
+              photo={photo}
+              lightboxIndex={i}
+              onOpen={setIndex}
+              extraClassName="mb-4 sm:mb-6 break-inside-avoid"
+            />
+          ))}
         </div>
       )}
 
