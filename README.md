@@ -20,12 +20,26 @@ npm run dev
 
 ## Adding photos
 
-**Just drop files into the right folder. No code edits needed.**
+The site auto-discovers everything in `public/images/<category>/`. But
+camera originals are 20–50 MB each — way too big for GitHub (100 MB hard
+limit) and pointless for the web. So the workflow is:
 
-The site scans `public/images/<category>/` automatically. Whatever images
-are in there show up on that page, in alphabetical filename order.
+1. **Drop originals** into `raw-photos/<category>/` (this folder is
+   gitignored — originals stay on your machine, never get committed)
+2. **Run the resize script** — it shrinks each photo to 2400px long edge,
+   JPEG quality 82, and writes the optimized version into
+   `public/images/<category>/`:
+   ```bash
+   npm run resize
+   ```
+   Typical reduction: 30 MB → ~500 KB. Indistinguishable on any screen.
+3. **Commit + push** `public/images/` — the small optimized JPEGs only.
 
-Folders:
+The first time you run `npm run resize`, it creates the
+`raw-photos/<category>/` folder structure for you. Subsequent runs skip
+files whose output is already up-to-date, so re-running is cheap.
+
+### Folders
 
 - `public/images/home/` — featured photos on the landing page
 - `public/images/automotive/`
@@ -33,7 +47,8 @@ Folders:
 - `public/images/portraits/`
 - `public/images/wildlife/`
 
-Supported formats: `.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`, `.gif`.
+Supported input formats: `.jpg`, `.jpeg`, `.png`, `.tif`, `.tiff`,
+`.webp`, `.heic`, `.heif`, `.avif`. All output as `.jpg`.
 
 ### Controlling the order
 
@@ -41,18 +56,16 @@ Files are sorted alphabetically (with smart number handling). To reorder,
 prefix filenames with numbers:
 
 ```
-01-porsche-front.jpg
-02-porsche-side.jpg
-03-porsche-engine.jpg
+raw-photos/automotive/
+  01-porsche-front.jpg
+  02-porsche-side.jpg
+  03-porsche-engine.jpg
 ```
 
 The grid lays out top-to-bottom, left-to-right across two columns, so
-`01-` appears top-left, then the rest flow down.
-
-### Recommended photo sizes
-- Long edge ~2000px, JPEG quality ~80, sRGB.
-- Aim for ~250–500 KB per file.
-- Next.js auto-generates responsive sizes + WebP at request time.
+`01-` appears top-left, then the rest flow down. To move a photo, just
+rename — change `02-` to `04-` and `04-` to `02-`, run `npm run resize`
+again, save. Done.
 
 ### Alt text (accessibility / SEO)
 
