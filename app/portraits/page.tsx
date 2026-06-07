@@ -1,0 +1,24 @@
+import type { Metadata } from "next";
+import Gallery from "@/components/Gallery";
+import { getGallery } from "@/lib/galleries";
+
+const gallery = getGallery("portraits");
+
+export const metadata: Metadata = {
+  title: `${gallery.title} — Adam Zvulun`,
+  description: gallery.description,
+};
+
+export default function Page() {
+  return (
+    <div className="mx-auto max-w-7xl px-6 py-12">
+      <header className="mb-10 text-center">
+        <h1 className="font-serif text-4xl sm:text-5xl tracking-tight">{gallery.title}</h1>
+        <p className="mt-2 text-sm uppercase tracking-[0.3em] text-neutral-500">
+          {gallery.description}
+        </p>
+      </header>
+      <Gallery photos={gallery.photos} />
+    </div>
+  );
+}
