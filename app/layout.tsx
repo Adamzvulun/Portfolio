@@ -13,19 +13,17 @@ const montserrat = Montserrat({
 });
 
 const title = "Adam Zvulun — Photography";
-const description = "Photography portfolio of Adam Zvulun.";
 
 export const metadata: Metadata = {
   // Absolute base so relative metadata URLs resolve to the production domain
   // when links are shared.
   metadataBase: new URL("https://adamzvulun.com"),
   title,
-  // The SEO description is emitted via `other` (below) rather than the
-  // top-level `description` field on purpose: Next auto-copies a top-level
-  // description into og:description / twitter:description, which would put a
-  // subtitle line on the share card. Routing it through `other` keeps the
-  // <meta name="description"> tag for search engines without feeding the card.
-  other: { description },
+  // No `description` anywhere on purpose. Link-preview scrapers (WhatsApp,
+  // etc.) fall back to <meta name="description"> when og:description is
+  // absent, so any description tag would reappear as a subtitle on the share
+  // card. Omitting it entirely keeps the card to image + title; search
+  // engines just generate a snippet from page content.
   openGraph: {
     title,
     siteName: "Adam Zvulun",
