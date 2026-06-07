@@ -7,7 +7,7 @@ Deployed on [Vercel](https://vercel.com).
 ## Pages
 
 - `/` — Home (selected work)
-- `/automotive`, `/architecture`, `/portraits`, `/wildlife` — category galleries
+- `/architecture`, `/portraits`, `/wildlife` — category galleries
 - `/contact` — contact form (Formspree)
 
 ## Run locally
@@ -42,7 +42,6 @@ files whose output is already up-to-date, so re-running is cheap.
 ### Folders
 
 - `public/images/home/` — featured photos on the landing page
-- `public/images/automotive/`
 - `public/images/architecture/`
 - `public/images/portraits/`
 - `public/images/wildlife/`

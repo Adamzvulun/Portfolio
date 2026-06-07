@@ -2,7 +2,7 @@ import { loadPhotos, type Photo } from "./photos";
 
 export type { Photo };
 
-export type GallerySlug = "automotive" | "architecture" | "portraits" | "wildlife";
+export type GallerySlug = "architecture" | "portraits" | "wildlife";
 
 export type Gallery = {
   slug: GallerySlug;
@@ -12,11 +12,6 @@ export type Gallery = {
 };
 
 const meta: Record<GallerySlug, Omit<Gallery, "photos">> = {
-  automotive: {
-    slug: "automotive",
-    title: "Automotive",
-    description: "Cars, motion, and machined light.",
-  },
   architecture: {
     slug: "architecture",
     title: "Architecture",

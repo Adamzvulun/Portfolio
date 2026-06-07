@@ -16,7 +16,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SRC_ROOT = path.join(ROOT, "raw-photos");
 const DST_ROOT = path.join(ROOT, "public", "images");
 
-const CATEGORIES = ["home", "automotive", "architecture", "portraits", "wildlife"];
+const CATEGORIES = ["home", "architecture", "portraits", "wildlife"];
 const MAX_EDGE = 2400; // px on the long edge
 const QUALITY = 82; // JPEG quality 0-100; 82 is the sweet spot
 const INPUT_RE = /\.(jpe?g|png|tiff?|webp|heic|heif|avif)$/i;
