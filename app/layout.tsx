@@ -27,11 +27,25 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Adam Zvulun",
     type: "website",
+    // Explicit absolute URL with no query string. Next's file-convention
+    // opengraph-image.jpg also emits a tag (which most scrapers handle), but
+    // WhatsApp's scraper can choke on the cache-busting `?hash` suffix and
+    // drop the preview image. Pointing it at a clean static copy is the
+    // reliable path for WhatsApp.
+    images: [
+      {
+        url: "https://adamzvulun.com/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Adam Zvulun — Photography",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
+    images: ["https://adamzvulun.com/og.jpg"],
   },
 };
 
