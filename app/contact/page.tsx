@@ -7,7 +7,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID ?? "";
+  // Formspree form ID. Baked in as the default (it's a public identifier —
+  // it ships in the client bundle either way), with an env-var override if
+  // ever needed for a different form.
+  const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID ?? "maqzedld";
 
   return (
     <div className="mx-auto max-w-2xl px-6 pb-12">
