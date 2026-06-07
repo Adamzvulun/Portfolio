@@ -23,13 +23,13 @@ export default function Gallery({ photos }: Props) {
 
   return (
     <>
-      <div className="columns-2 gap-3 [column-fill:_balance]">
+      <div className="columns-2 gap-4 sm:gap-6 [column-fill:_balance]">
         {photos.map((photo, i) => (
           <button
             key={photo.src}
             type="button"
             onClick={() => setIndex(i)}
-            className="group block w-full mb-3 break-inside-avoid cursor-zoom-in overflow-hidden bg-neutral-100"
+            className="group block w-full mb-4 sm:mb-6 break-inside-avoid cursor-zoom-in overflow-hidden bg-neutral-100"
             aria-label={`Open ${photo.alt}`}
           >
             <Image
@@ -37,7 +37,7 @@ export default function Gallery({ photos }: Props) {
               alt={photo.alt}
               width={photo.width}
               height={photo.height}
-              sizes="(max-width: 768px) 50vw, 384px"
+              sizes="(max-width: 768px) 50vw, 576px"
               className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.02]"
             />
           </button>

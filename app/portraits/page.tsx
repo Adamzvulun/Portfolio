@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   const gallery = getGallery("portraits");
   return (
-    <div className="mx-auto max-w-3xl px-4 pb-12">
+    <div className="mx-auto max-w-6xl px-6 pb-16">
       <Gallery photos={gallery.photos} />
     </div>
   );
