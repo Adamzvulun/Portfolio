@@ -13,7 +13,7 @@ export default function Page() {
   return (
     <div className="mx-auto max-w-7xl px-6 py-12">
       <header className="mb-10 text-center">
-        <h1 className="font-serif text-4xl sm:text-5xl tracking-tight">{gallery.title}</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold uppercase tracking-wider">{gallery.title}</h1>
         <p className="mt-2 text-sm uppercase tracking-[0.3em] text-neutral-500">
           {gallery.description}
         </p>

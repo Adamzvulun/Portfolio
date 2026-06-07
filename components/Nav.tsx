@@ -21,7 +21,7 @@ export default function Nav() {
       <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="font-serif text-2xl tracking-wide text-neutral-900 hover:text-neutral-600 transition-colors"
+          className="text-xl font-bold uppercase tracking-wider text-neutral-900 hover:text-neutral-600 transition-colors"
           onClick={() => setOpen(false)}
         >
           Adam Zvulun

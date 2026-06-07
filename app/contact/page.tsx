@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <div className="mx-auto max-w-2xl px-6 py-16">
       <header className="mb-10 text-center">
-        <h1 className="font-serif text-4xl sm:text-5xl tracking-tight">Get in touch</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold uppercase tracking-wider">Get in touch</h1>
         <p className="mt-3 text-sm uppercase tracking-[0.3em] text-neutral-500">
           Bookings, prints, and inquiries
         </p>

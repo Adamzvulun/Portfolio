@@ -45,7 +45,7 @@ export default function ContactForm({ formspreeId }: Props) {
   if (status === "ok") {
     return (
       <div className="rounded border border-neutral-200 p-8 text-center">
-        <p className="font-serif text-2xl">Thank you.</p>
+        <p className="text-2xl font-bold uppercase tracking-wider">Thank you.</p>
         <p className="mt-2 text-neutral-600">I&apos;ll get back to you soon.</p>
       </div>
     );
