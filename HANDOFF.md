@@ -159,6 +159,12 @@ npm run resize     # if he ever wants to start optimizing
 Build should pass cleanly. If you see EXIF/dimension warnings about specific
 photos, it's the rotation fix at `lib/photos.ts:25-30` catching weird files.
 
+## Keep PLAN.md current
+
+`PLAN.md` tracks done / open work. Every session that ships a meaningful
+change should move bullets between sections and bump the "Last updated"
+line. Commit it alongside the change.
+
 ## Tone
 
 - Short replies. No headers or sections for trivial questions.
