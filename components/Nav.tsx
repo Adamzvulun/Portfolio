@@ -15,7 +15,7 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <header className="pt-40 sm:pt-56 pb-16 text-center">
+    <header className="pt-28 sm:pt-44 pb-16 text-center">
       <Link
         href="/"
         className="inline-block text-3xl sm:text-4xl font-bold uppercase tracking-wider text-neutral-900 hover:text-neutral-700 transition-colors"
