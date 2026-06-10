@@ -22,13 +22,13 @@ type Props = {
 };
 
 // First-viewport tiles (by global photo index, which matches DOM order in
-// every layout): fetched eagerly at high priority so the LCP candidate isn't
-// stuck behind lazy-loading, and rendered without the fade-in — browsers
-// exclude opacity-0 elements from LCP, so fading the first tiles would push
-// the metric past the animation. 4 covers the top two rows of the desktop
-// two-column grid and the first screen on phones. The mobile and desktop
-// copies of a tile share identical src/sizes, so the browser coalesces them
-// into one request even though both are eager.
+// every layout): fetched eagerly at high priority so the first photos start
+// downloading immediately instead of waiting for lazy-loading. They still
+// fade in like every other tile — the eager hint only changes *when the
+// bytes are requested*, not the appearance. 4 covers the top two rows of the
+// desktop two-column grid and the first screen on phones. The mobile and
+// desktop copies of a tile share identical src/sizes, so the browser
+// coalesces them into one request even though both are eager.
 const EAGER_COUNT = 4;
 
 function Tile({
@@ -44,7 +44,9 @@ function Tile({
 }) {
   // lightboxIndex is the photo's position in the full list in every layout.
   const eager = lightboxIndex < EAGER_COUNT;
-  const [loaded, setLoaded] = useState(eager);
+  // Every tile fades in on load — including the eager ones — for a uniform
+  // look across the gallery.
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <button
