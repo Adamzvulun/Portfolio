@@ -116,18 +116,27 @@ whole first impression.
 
 All three items must respect finding C (no `description` meta tags).
 
-- [ ] `app/robots.ts` — allow all, point at the sitemap.
-- [ ] `app/sitemap.ts` — the five static routes (`/`, `/architecture`,
-      `/portraits`, `/wildlife`, `/contact`) using the existing
-      `https://adamzvulun.com` base.
-- [ ] JSON-LD in `app/layout.tsx`: `Person` (name, url, `jobTitle:
-      "Photographer"`, `sameAs` if/when social links exist) — rendered as an
-      inline `<script type="application/ld+json">` with `<` escaped to
-      `<` per the Next docs. A per-gallery `ImageGallery`/
-      `CollectionPage` schema is a nice-to-have second step.
-- **Acceptance:** `/robots.txt` and `/sitemap.xml` serve correctly from a
-  local build; JSON-LD validates in Google's Rich Results test; WhatsApp
-  share card unchanged (no description resurfaces).
+- [x] `app/robots.ts` — allow all, point at the sitemap. Verified output:
+      `User-Agent: * / Allow: / / Sitemap: https://adamzvulun.com/sitemap.xml`.
+- [x] `app/sitemap.ts` — the five static routes on the
+      `https://adamzvulun.com` base, with changeFrequency/priority hints
+      (galleries monthly @0.8, home monthly @1.0, contact yearly @0.5).
+      Verified valid `<urlset>` XML in the build output.
+- [x] JSON-LD `Person` in `app/layout.tsx` — name, url, `jobTitle:
+      "Photographer"`, `image: og.jpg`, `sameAs` the real Instagram from the
+      footer. Inline `<script type="application/ld+json">` with `<` escaped
+      to `<` per the Next docs. Renders on every page (it's in the
+      layout). Per-gallery `ImageGallery` schema deferred as the optional
+      follow-up.
+- **Acceptance:** ✅ `/robots.txt` and `/sitemap.xml` serve from the build;
+  JSON-LD is valid escaped JSON on every page; homepage still emits **zero**
+  `meta name="description"` — WhatsApp workaround intact.
+- **Observed (not actioned — needs your call):** the gallery + contact pages
+  each emit their *own* `meta name="description"` from page-level metadata,
+  which pre-dates this work but contradicts the "no description anywhere"
+  comment in `layout.tsx`. The bare domain (the URL most likely to be shared)
+  stays clean, so the WhatsApp card is unaffected. Left as-is; flag if you
+  want those removed for consistency.
 
 ### Phase 5 — Cleanup *(~30 min, lowest priority)*
 

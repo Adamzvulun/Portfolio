@@ -3,8 +3,8 @@
 Living checklist of what's done and what's still open. Each Claude session
 should update this file as part of its work.
 
-Last updated: shipped improvement-plan Phase 3 — global keyboard-focus
-outline, aria-live form status, error auto-clear (Phases 1+2 done prior)
+Last updated: shipped improvement-plan Phase 4 — robots.ts, sitemap.ts,
+JSON-LD Person schema (Phases 1-3 done prior)
 
 ---
 
@@ -71,8 +71,10 @@ outline, aria-live form status, error auto-clear (Phases 1+2 done prior)
       (covers every interactive element + lightbox buttons), aria-live form
       status, error auto-clear on edit. Lightbox keyboard/focus verified
       already handled by the library (role=dialog, aria-modal, focus restore).
-- [ ] Phase 4: SEO — `app/sitemap.ts`, `app/robots.ts`, JSON-LD Person
-      (must preserve the intentional no-meta-description WhatsApp workaround)
+- [x] Phase 4: SEO — `app/robots.ts`, `app/sitemap.ts` (5 routes), JSON-LD
+      Person in layout. Homepage stays description-free (WhatsApp workaround
+      intact). Noted: gallery/contact pages emit their own pre-existing meta
+      descriptions — left as-is pending a call on consistency.
 - [ ] Phase 5: dedupe `outputFileTracingExcludes` (verify-gated on a
       Vercel preview deploy — that config is load-bearing)
 

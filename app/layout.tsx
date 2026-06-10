@@ -49,12 +49,33 @@ export const metadata: Metadata = {
   },
 };
 
+// Person structured data so search engines (and AI crawlers) can connect the
+// site to Adam as a photographer. No `description` field — see the metadata
+// note above; JSON-LD doesn't emit a <meta name="description">, so the
+// WhatsApp share-card workaround is unaffected.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Adam Zvulun",
+  url: "https://adamzvulun.com",
+  jobTitle: "Photographer",
+  image: "https://adamzvulun.com/og.jpg",
+  sameAs: ["https://www.instagram.com/fouzi_bukhtar/"],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${montserrat.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-neutral-900">
+        {/* `<` escaped per Next's JSON-LD guidance to prevent HTML injection. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
