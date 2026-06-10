@@ -89,22 +89,28 @@ whole first impression.
 
 ### Phase 3 — Accessibility *(~1–2 h)*
 
-- [ ] Replace `outline-none` on the three form fields with a visible
-      `focus-visible` treatment (e.g. `focus-visible:ring-2
-      focus-visible:ring-neutral-900 focus-visible:ring-offset-2`), keeping
-      the existing border-darken style.
-- [ ] Add the same `focus-visible` ring to gallery tile buttons, nav links,
-      the Send button, and BackToTop — tab around the whole site once.
-- [ ] Announce form status: wrap the success panel and error paragraph in
-      `role="status"` / `aria-live="polite"` (finding B).
-- [ ] Clear the form error when the user edits any field (review item 8) —
-      `onChange` on the form element resetting `status`/`errorMsg` is enough.
-- [ ] **Verify, then decide:** keyboard-test the lightbox (open with Enter,
-      Tab cycles inside, Esc closes, focus returns to the trigger tile). YARL
-      likely already handles this; only schedule work if the test fails.
-- **Acceptance:** every interactive element shows a focus indicator when
-  tabbing; form status changes are announced by a screen reader; lightbox
-  keyboard behavior documented as pass/fail.
+- [x] Replace `outline-none` on the three form fields with a visible
+      keyboard-focus treatment, keeping the existing border-darken style.
+- [x] Cover gallery tiles, nav links, Send, BackToTop, footer link too.
+      **Implemented as a single global `:focus-visible { outline }` rule in
+      `globals.css`** rather than per-element utilities — one source of truth,
+      nothing missed, and it also styles the lightbox's own buttons. (Decided
+      against the per-element `focus-visible:ring-*` approach the plan
+      sketched.)
+- [x] Announce form status: `role="status"` on the success panel,
+      `role="status"` + `aria-live="polite"` on the error paragraph
+      (finding B).
+- [x] Clear the form error when the user edits any field (review item 8) —
+      `onChange` on the `<form>` resets `status`/`errorMsg` when in error.
+- [x] **Verified, no work needed:** lightbox source confirms `role="dialog"`
+      + `aria-modal="true"` + `aria-label` (screen readers announce it),
+      `restoreFocus.current = event.relatedTarget` (focus returns to the
+      trigger on close), and Escape-to-close. Review finding #4 resolves as a
+      no-op, as predicted.
+- **Acceptance:** ✅ global focus outline compiled into the production CSS;
+  zero `outline-none` left in output; lint + build green. Form-status ARIA is
+  client-only state (correctly absent from static prerender). A manual
+  screen-reader/keyboard pass on a real deploy is still worth doing.
 
 ### Phase 4 — SEO *(~1–2 h)*
 
@@ -140,8 +146,8 @@ All three items must respect finding C (no `description` meta tags).
 - Fixing the "misleading lightboxIndex comment" (doesn't exist).
 - Adding `<meta name="description">` anywhere (intentional omission;
   documented WhatsApp workaround).
-- Pre-emptive lightbox focus-trap work (verify first; likely handled by the
-  library).
+- Pre-emptive lightbox focus-trap work — verified done by the library
+  (`role="dialog"`, `aria-modal`, focus restore, Escape); no action taken.
 
 ---
 

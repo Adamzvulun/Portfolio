@@ -3,8 +3,8 @@
 Living checklist of what's done and what's still open. Each Claude session
 should update this file as part of its work.
 
-Last updated: shipped improvement-plan Phases 1+2 — sharp declared,
-first-tile LCP work (eager + fetchPriority + no fade on first 4)
+Last updated: shipped improvement-plan Phase 3 — global keyboard-focus
+outline, aria-live form status, error auto-clear (Phases 1+2 done prior)
 
 ---
 
@@ -67,8 +67,10 @@ first-tile LCP work (eager + fetchPriority + no fade on first 4)
       (NOT the deprecated `priority` prop) + exempt them from the fade-in.
       Verified in prerendered HTML: 4 head preload links, eager imgs SSR
       visible (`opacity-100`), rest stay lazy.
-- [ ] Phase 3: a11y — focus-visible rings, aria-live form status,
-      error auto-clear, lightbox keyboard verification
+- [x] Phase 3: a11y — global `:focus-visible` outline in globals.css
+      (covers every interactive element + lightbox buttons), aria-live form
+      status, error auto-clear on edit. Lightbox keyboard/focus verified
+      already handled by the library (role=dialog, aria-modal, focus restore).
 - [ ] Phase 4: SEO — `app/sitemap.ts`, `app/robots.ts`, JSON-LD Person
       (must preserve the intentional no-meta-description WhatsApp workaround)
 - [ ] Phase 5: dedupe `outputFileTracingExcludes` (verify-gated on a

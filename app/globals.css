@@ -10,3 +10,12 @@ body {
   color: #171717;
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+/* Visible keyboard-focus indicator for every interactive element. Only fires
+   for keyboard/programmatic focus (:focus-visible), so mouse clicks stay
+   clean. The outline follows each element's border-radius (rounded BackToTop,
+   square tiles), and form inputs keep their border-darken on top of this. */
+:focus-visible {
+  outline: 2px solid #171717;
+  outline-offset: 2px;
+}
