@@ -21,16 +21,6 @@ type Props = {
   layout?: "paired" | "balance";
 };
 
-// First-viewport tiles (by global photo index, which matches DOM order in
-// every layout): fetched eagerly at high priority so the first photos start
-// downloading immediately instead of waiting for lazy-loading. They still
-// fade in like every other tile — the eager hint only changes *when the
-// bytes are requested*, not the appearance. 4 covers the top two rows of the
-// desktop two-column grid and the first screen on phones. The mobile and
-// desktop copies of a tile share identical src/sizes, so the browser
-// coalesces them into one request even though both are eager.
-const EAGER_COUNT = 4;
-
 function Tile({
   photo,
   lightboxIndex,
@@ -42,10 +32,6 @@ function Tile({
   onOpen: (i: number) => void;
   extraClassName?: string;
 }) {
-  // lightboxIndex is the photo's position in the full list in every layout.
-  const eager = lightboxIndex < EAGER_COUNT;
-  // Every tile fades in on load — including the eager ones — for a uniform
-  // look across the gallery.
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -62,8 +48,6 @@ function Tile({
         width={photo.width}
         height={photo.height}
         sizes="(max-width: 640px) 100vw, 640px"
-        loading={eager ? "eager" : undefined}
-        fetchPriority={eager ? "high" : undefined}
         onLoad={() => setLoaded(true)}
         className={`block w-full h-auto transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.02] ${
           loaded ? "opacity-100" : "opacity-0"
