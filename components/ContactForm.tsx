@@ -44,7 +44,10 @@ export default function ContactForm({ formspreeId }: Props) {
 
   if (status === "ok") {
     return (
-      <div className="rounded border border-neutral-200 p-8 text-center">
+      <div
+        role="status"
+        className="rounded border border-neutral-200 p-8 text-center"
+      >
         <p className="text-2xl font-bold uppercase tracking-wider">Thank you.</p>
         <p className="mt-2 text-neutral-600">I&apos;ll get back to you soon.</p>
       </div>
@@ -52,7 +55,18 @@ export default function ContactForm({ formspreeId }: Props) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4">
+    <form
+      onSubmit={onSubmit}
+      // Clear a previous error as soon as the user starts editing again, so a
+      // stale message doesn't linger over a field they're already fixing.
+      onChange={() => {
+        if (status === "error") {
+          setStatus("idle");
+          setErrorMsg("");
+        }
+      }}
+      className="flex flex-col gap-4"
+    >
       {!configured && (
         <p className="rounded border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
           Contact form is not yet configured. Set <code className="font-mono">NEXT_PUBLIC_FORMSPREE_ID</code>{" "}
@@ -66,7 +80,7 @@ export default function ContactForm({ formspreeId }: Props) {
           required
           name="name"
           type="text"
-          className="border border-neutral-300 px-3 py-2 focus:border-neutral-900 outline-none"
+          className="border border-neutral-300 px-3 py-2 focus:border-neutral-900"
         />
       </label>
 
@@ -76,7 +90,7 @@ export default function ContactForm({ formspreeId }: Props) {
           required
           name="email"
           type="email"
-          className="border border-neutral-300 px-3 py-2 focus:border-neutral-900 outline-none"
+          className="border border-neutral-300 px-3 py-2 focus:border-neutral-900"
         />
       </label>
 
@@ -86,7 +100,7 @@ export default function ContactForm({ formspreeId }: Props) {
           required
           name="message"
           rows={6}
-          className="border border-neutral-300 px-3 py-2 focus:border-neutral-900 outline-none resize-y"
+          className="border border-neutral-300 px-3 py-2 focus:border-neutral-900 resize-y"
         />
       </label>
 
@@ -99,7 +113,9 @@ export default function ContactForm({ formspreeId }: Props) {
       </button>
 
       {status === "error" && (
-        <p className="text-sm text-red-700">{errorMsg}</p>
+        <p role="status" aria-live="polite" className="text-sm text-red-700">
+          {errorMsg}
+        </p>
       )}
     </form>
   );

@@ -3,7 +3,8 @@
 Living checklist of what's done and what's still open. Each Claude session
 should update this file as part of its work.
 
-Last updated: deployed to Vercel (live) — framework pinned + image trace fix
+Last updated: improvement plan closed out — Phases 1-4 shipped, Phase 5
+deliberately skipped. Branch ready to merge.
 
 ---
 
@@ -58,6 +59,28 @@ Last updated: deployed to Vercel (live) — framework pinned + image trace fix
       https://portfolio-bay-tau-87.vercel.app. Production branch is `main`.
       Two fixes were needed (see "Vercel deploy gotchas" below).
 - [x] **Architecture photos** — 14 committed.
+
+### Improvement plan (new — see `plans/improvement-plan.md`)
+- [x] Phase 1: declare `sharp` as a direct dependency (build currently passes
+      via next's transitive dep — verified — but hoisting isn't contractual)
+- [x] Phase 2: LCP — `fetchPriority`/`loading="eager"` on first 4 tiles
+      (NOT the deprecated `priority` prop) + exempt them from the fade-in.
+      Verified in prerendered HTML: 4 head preload links, eager imgs SSR
+      visible (`opacity-100`), rest stay lazy.
+- [x] Phase 3: a11y — global `:focus-visible` outline in globals.css
+      (covers every interactive element + lightbox buttons), aria-live form
+      status, error auto-clear on edit. Lightbox keyboard/focus verified
+      already handled by the library (role=dialog, aria-modal, focus restore).
+- [x] Phase 4: SEO — `app/robots.ts`, `app/sitemap.ts` (5 routes), JSON-LD
+      Person in layout. Homepage stays description-free (WhatsApp workaround
+      intact). Noted: gallery/contact pages emit their own pre-existing meta
+      descriptions — left as-is pending a call on consistency.
+- [x] Phase 5: SKIPPED by decision — the redundant-looking
+      `outputFileTracingExcludes` keys stay. Cosmetic-only cleanup with a
+      deploy-breaking failure mode (config guards the Vercel 300 MB limit);
+      only verifiable on a real deploy. Not worth it.
+
+**Improvement plan complete (4 of 5 phases shipped, 1 deliberately skipped).**
 
 ### Content gaps
 - [ ] **More home picks** if user wants — easy to insert with the NN-prefix
