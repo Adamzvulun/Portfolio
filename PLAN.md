@@ -3,7 +3,8 @@
 Living checklist of what's done and what's still open. Each Claude session
 should update this file as part of its work.
 
-Last updated: deployed to Vercel (live) — framework pinned + image trace fix
+Last updated: audited external code review → improvement plan in
+`plans/improvement-plan.md` (+ visual `plans/improvement-plan.html`)
 
 ---
 
@@ -58,6 +59,18 @@ Last updated: deployed to Vercel (live) — framework pinned + image trace fix
       https://portfolio-bay-tau-87.vercel.app. Production branch is `main`.
       Two fixes were needed (see "Vercel deploy gotchas" below).
 - [x] **Architecture photos** — 14 committed.
+
+### Improvement plan (new — see `plans/improvement-plan.md`)
+- [ ] Phase 1: declare `sharp` as a direct dependency (build currently passes
+      via next's transitive dep — verified — but hoisting isn't contractual)
+- [ ] Phase 2: LCP — `fetchPriority`/`loading="eager"` on first tiles
+      (NOT the deprecated `priority` prop) + exempt them from the fade-in
+- [ ] Phase 3: a11y — focus-visible rings, aria-live form status,
+      error auto-clear, lightbox keyboard verification
+- [ ] Phase 4: SEO — `app/sitemap.ts`, `app/robots.ts`, JSON-LD Person
+      (must preserve the intentional no-meta-description WhatsApp workaround)
+- [ ] Phase 5: dedupe `outputFileTracingExcludes` (verify-gated on a
+      Vercel preview deploy — that config is load-bearing)
 
 ### Content gaps
 - [ ] **More home picks** if user wants — easy to insert with the NN-prefix
