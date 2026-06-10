@@ -56,7 +56,7 @@ shippable; stop anywhere and the site is strictly better.
 
 The cheapest insurance in the repo.
 
-- [ ] Add `sharp` to `dependencies` in `package.json`
+- [x] Add `sharp` to `dependencies` in `package.json`
       (`npm install sharp` — pins the version we already rely on for
       `lib/photos.ts` and `scripts/resize.mjs`).
 - **Acceptance:** `npm ls sharp` shows it as a direct dependency;
@@ -67,20 +67,25 @@ The cheapest insurance in the repo.
 The homepage is the storefront; the first paint of the first photos is the
 whole first impression.
 
-- [ ] Pass an `eager`/priority hint to the first tiles from `Gallery.tsx`:
+- [x] Pass an `eager`/priority hint to the first tiles from `Gallery.tsx`:
       `fetchPriority="high"` + `loading="eager"` on roughly the first 2
       images per column (first 1–2 on mobile). **Use the Next 16 APIs — not
       the deprecated `priority` prop.** A `preload` on the single first image
       is optional; docs warn against preloading several candidates.
-- [ ] Exempt those first tiles from the `opacity-0 → onLoad` fade (finding A),
+- [x] Exempt those first tiles from the `opacity-0 → onLoad` fade (finding A),
       or shorten the fade for them, so the LCP element paints visible.
-- [ ] Sanity-check the `sizes` attribute (`(max-width: 640px) 100vw, 640px`)
-      against the actual rendered width at `max-w-7xl` two-column layout
-      (~610 px column at 1280 container — current value is close; verify, don't
-      assume).
+- [x] Sanity-check the `sizes` attribute (`(max-width: 640px) 100vw, 640px`)
+      against the actual rendered width at `max-w-7xl` two-column layout —
+      verified: column renders at ~604 px (1280 − 2×24 padding − 24 gap, ÷2),
+      so 640 is correctly conservative; kept as is.
 - **Acceptance:** Lighthouse (mobile) LCP improves measurably on `/`;
   first-viewport photos no longer flash from blank; no deprecation warnings
   in build output.
+- **Shipped & verified in prerendered output:** 4 `<link rel="preload"
+  as="image" fetchPriority="high">` head tags (one per eager photo, deduped
+  across the two layout copies); 8 `loading="eager"` imgs; eager tiles SSR
+  with `opacity-100`; remaining 37 photos stay lazy with the fade. Lighthouse
+  run still pending on a real deploy.
 
 ### Phase 3 — Accessibility *(~1–2 h)*
 

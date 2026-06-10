@@ -21,6 +21,16 @@ type Props = {
   layout?: "paired" | "balance";
 };
 
+// First-viewport tiles (by global photo index, which matches DOM order in
+// every layout): fetched eagerly at high priority so the LCP candidate isn't
+// stuck behind lazy-loading, and rendered without the fade-in — browsers
+// exclude opacity-0 elements from LCP, so fading the first tiles would push
+// the metric past the animation. 4 covers the top two rows of the desktop
+// two-column grid and the first screen on phones. The mobile and desktop
+// copies of a tile share identical src/sizes, so the browser coalesces them
+// into one request even though both are eager.
+const EAGER_COUNT = 4;
+
 function Tile({
   photo,
   lightboxIndex,
@@ -32,7 +42,9 @@ function Tile({
   onOpen: (i: number) => void;
   extraClassName?: string;
 }) {
-  const [loaded, setLoaded] = useState(false);
+  // lightboxIndex is the photo's position in the full list in every layout.
+  const eager = lightboxIndex < EAGER_COUNT;
+  const [loaded, setLoaded] = useState(eager);
 
   return (
     <button
@@ -48,6 +60,8 @@ function Tile({
         width={photo.width}
         height={photo.height}
         sizes="(max-width: 640px) 100vw, 640px"
+        loading={eager ? "eager" : undefined}
+        fetchPriority={eager ? "high" : undefined}
         onLoad={() => setLoaded(true)}
         className={`block w-full h-auto transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.02] ${
           loaded ? "opacity-100" : "opacity-0"

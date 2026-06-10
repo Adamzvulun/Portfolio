@@ -3,8 +3,8 @@
 Living checklist of what's done and what's still open. Each Claude session
 should update this file as part of its work.
 
-Last updated: audited external code review → improvement plan in
-`plans/improvement-plan.md` (+ visual `plans/improvement-plan.html`)
+Last updated: shipped improvement-plan Phases 1+2 — sharp declared,
+first-tile LCP work (eager + fetchPriority + no fade on first 4)
 
 ---
 
@@ -61,10 +61,12 @@ Last updated: audited external code review → improvement plan in
 - [x] **Architecture photos** — 14 committed.
 
 ### Improvement plan (new — see `plans/improvement-plan.md`)
-- [ ] Phase 1: declare `sharp` as a direct dependency (build currently passes
+- [x] Phase 1: declare `sharp` as a direct dependency (build currently passes
       via next's transitive dep — verified — but hoisting isn't contractual)
-- [ ] Phase 2: LCP — `fetchPriority`/`loading="eager"` on first tiles
-      (NOT the deprecated `priority` prop) + exempt them from the fade-in
+- [x] Phase 2: LCP — `fetchPriority`/`loading="eager"` on first 4 tiles
+      (NOT the deprecated `priority` prop) + exempt them from the fade-in.
+      Verified in prerendered HTML: 4 head preload links, eager imgs SSR
+      visible (`opacity-100`), rest stay lazy.
 - [ ] Phase 3: a11y — focus-visible rings, aria-live form status,
       error auto-clear, lightbox keyboard verification
 - [ ] Phase 4: SEO — `app/sitemap.ts`, `app/robots.ts`, JSON-LD Person
