@@ -138,13 +138,15 @@ All three items must respect finding C (no `description` meta tags).
   stays clean, so the WhatsApp card is unaffected. Left as-is; flag if you
   want those removed for consistency.
 
-### Phase 5 — Cleanup *(~30 min, lowest priority)*
+### Phase 5 — Cleanup *(SKIPPED — decided 2026-06-10)*
 
-- [ ] Deduplicate `outputFileTracingExcludes` in `next.config.ts` — keep one
-      key, then **verify the Vercel function size on the preview deploy**
-      before merging (this setting previously guarded a 559 MB → <300 MB
-      fix; treat it as load-bearing).
-- [ ] Update `PLAN.md` per its own convention (move items, refresh "Last
+- [ ] ~~Deduplicate `outputFileTracingExcludes` in `next.config.ts`~~ —
+      **skipped by decision.** The two keys are redundant in appearance, but
+      this config is load-bearing (it keeps the Vercel function under the
+      300 MB limit) and which key Next honors can only be verified on a real
+      Vercel deploy. Pure cosmetics with a deploy-breaking failure mode —
+      not worth it. Revisit only if the config is touched for other reasons.
+- [x] Update `PLAN.md` per its own convention (move items, refresh "Last
       updated").
 - **Acceptance:** Vercel preview deploy succeeds with function size well
   under the 300 MB limit.

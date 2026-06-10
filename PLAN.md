@@ -3,8 +3,8 @@
 Living checklist of what's done and what's still open. Each Claude session
 should update this file as part of its work.
 
-Last updated: shipped improvement-plan Phase 4 — robots.ts, sitemap.ts,
-JSON-LD Person schema (Phases 1-3 done prior)
+Last updated: improvement plan closed out — Phases 1-4 shipped, Phase 5
+deliberately skipped. Branch ready to merge.
 
 ---
 
@@ -75,8 +75,12 @@ JSON-LD Person schema (Phases 1-3 done prior)
       Person in layout. Homepage stays description-free (WhatsApp workaround
       intact). Noted: gallery/contact pages emit their own pre-existing meta
       descriptions — left as-is pending a call on consistency.
-- [ ] Phase 5: dedupe `outputFileTracingExcludes` (verify-gated on a
-      Vercel preview deploy — that config is load-bearing)
+- [x] Phase 5: SKIPPED by decision — the redundant-looking
+      `outputFileTracingExcludes` keys stay. Cosmetic-only cleanup with a
+      deploy-breaking failure mode (config guards the Vercel 300 MB limit);
+      only verifiable on a real deploy. Not worth it.
+
+**Improvement plan complete (4 of 5 phases shipped, 1 deliberately skipped).**
 
 ### Content gaps
 - [ ] **More home picks** if user wants — easy to insert with the NN-prefix
